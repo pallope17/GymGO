@@ -1,0 +1,10 @@
+https://accespre.edu.gva.es/sso/login.xhtml?callbackUrl=https://itacapre.edu.gva.es/itaca_pre/login.html 
+
+44509880G  
+33401845A
+20008607X
+33562152T
+
+
+$P{idioma}.equals("_C")?" Curso académico: ":"Curs acadèmic: "
+
