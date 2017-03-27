@@ -30,10 +30,16 @@
 <datatype>integer</datatype>
 <default>NULL</default><relation table="Rutinas" row="id_rutina" />
 </row>
+<row name="dia_semana" null="1" autoincrement="0">
+<datatype>string</datatype>
+<default>NULL</default></row>
+<row name="posicion_rutina" null="1" autoincrement="0">
+<datatype>integer</datatype>
+<default>NULL</default></row>
 <key type="PRIMARY" name="">
 <part>id_ejercicio</part>
 </key>
-<comment>Tabla que hace la relaci髇 entre los ejercicios y las rutinas</comment>
+<comment>Tabla que hace la relaci贸n entre los ejercicios y las rutinas</comment>
 </table>
 <table x="1324" y="190" name="Ejercicios">
 <row name="id_ejercicio" null="1" autoincrement="1">
@@ -52,7 +58,7 @@
 <key type="PRIMARY" name="">
 <part>id_ejercicio</part>
 </key>
-<comment>Ejercicios disponibles, 鷑icamente pueden ser a馻didos a la base de datos por los administradores.</comment>
+<comment>Ejercicios disponibles, 煤nicamente pueden ser a帽adidos a la base de datos por los administradores.</comment>
 </table>
 <table x="805" y="203" name="Rutinas">
 <row name="id_rutina" null="1" autoincrement="1">
@@ -60,7 +66,7 @@
 <default>NULL</default></row>
 <row name="clasificacion_rutina" null="1" autoincrement="0">
 <datatype>string</datatype>
-<default>NULL</default><comment>clasificaci髇 dependiendo de las exigencias del usuario</comment>
+<default>NULL</default><comment>clasificaci贸n dependiendo de las exigencias del usuario</comment>
 </row>
 <row name="descripcion_rutina" null="1" autoincrement="0">
 <datatype>string</datatype>
@@ -68,7 +74,7 @@
 <key type="PRIMARY" name="">
 <part>id_rutina</part>
 </key>
-<comment>Rutinas de ejercicios, estas est醤 compuestas por ejercicios.</comment>
+<comment>Rutinas de ejercicios, estas est谩n compuestas por ejercicios.</comment>
 </table>
 <table x="312" y="255" name="Usuario">
 <row name="id_user" null="1" autoincrement="1">
@@ -104,7 +110,7 @@
 <key type="PRIMARY" name="">
 <part>id_user</part>
 </key>
-<comment>Datos del usuario que esta registrado en la aplicaci髇</comment>
+<comment>Datos del usuario que esta registrado en la aplicaci贸n</comment>
 </table>
 <table x="806" y="406" name="Dietas">
 <row name="id_dieta" null="1" autoincrement="1">
@@ -113,9 +119,9 @@
 <row name="calorias_totales" null="1" autoincrement="0">
 <datatype>double</datatype>
 <default>NULL</default></row>
-<row name="clasificaci髇_dieta" null="1" autoincrement="0">
+<row name="clasificaci贸n_dieta" null="1" autoincrement="0">
 <datatype>string</datatype>
-<default>NULL</default><comment>Clasificaci髇 seg鷑 las especificaciones del usuario</comment>
+<default>NULL</default><comment>Clasificaci贸n seg煤n las especificaciones del usuario</comment>
 </row>
 <row name="descripcion_dieta" null="1" autoincrement="0">
 <datatype>string</datatype>
@@ -123,7 +129,7 @@
 <key type="PRIMARY" name="">
 <part>id_dieta</part>
 </key>
-<comment>Dietas complementarias a las rutinas. Estas est醤 formadas por los alimentos</comment>
+<comment>Dietas complementarias a las rutinas. Estas est谩n formadas por los alimentos</comment>
 </table>
 <table x="1337" y="382" name="Alimentos">
 <row name="id_alimento" null="1" autoincrement="1">
