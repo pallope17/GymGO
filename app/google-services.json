@@ -1,0 +1,73 @@
+{
+  "project_info": {
+    "project_number": "1074774198978",
+    "firebase_url": "https://prueba-ee467.firebaseio.com",
+    "project_id": "prueba-ee467",
+    "storage_bucket": "prueba-ee467.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1074774198978:android:3e2bcd5d6d0a8a99",
+        "android_client_info": {
+          "package_name": "com.prueba"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1074774198978-7ei1ecdg1qfaj75h2nagi87jn47bpo7f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAB6U7u40kEnUqjLJ50hNK3ygBkp-eC3IY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1074774198978:android:445aa7a8361c46e0",
+        "android_client_info": {
+          "package_name": "com.example.giner.gymgo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1074774198978-7ei1ecdg1qfaj75h2nagi87jn47bpo7f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAB6U7u40kEnUqjLJ50hNK3ygBkp-eC3IY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
