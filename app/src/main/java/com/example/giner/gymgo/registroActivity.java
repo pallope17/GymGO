@@ -1,5 +1,9 @@
 package com.example.giner.gymgo;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.annotation.TargetApi;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 
@@ -27,6 +31,8 @@ public class registroActivity extends AppCompatActivity implements View.OnClickL
         private EditText emailRegistro;
         private EditText passRegistro;
         private Button botonRegistro;
+        private View mProgressView;
+        private View mLoginFormView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +70,8 @@ public class registroActivity extends AppCompatActivity implements View.OnClickL
             passRegistro = (EditText)findViewById(R.id.passwordRegistro);
             botonRegistro = (Button)findViewById(R.id.buttonRegistrar);
             botonRegistro.setOnClickListener(this);
+            mLoginFormView = findViewById(R.id.login_form);
+            mProgressView = findViewById(R.id.login_progress);
 
     }
 
@@ -86,9 +94,12 @@ public class registroActivity extends AppCompatActivity implements View.OnClickL
 
         if(v.getId()==botonRegistro.getId()){
 
+            showProgress(true);
+
             autentificacion.createUserWithEmailAndPassword(emailRegistro.getText().toString(),passRegistro.getText().toString()).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
+                    showProgress(false);
                     if(task.isSuccessful()){
                         Log.d(TAG, "Usuario registrado");
                         finish();
@@ -103,5 +114,37 @@ public class registroActivity extends AppCompatActivity implements View.OnClickL
         }
 
     }
+
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
+    private void showProgress(final boolean show) {
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
+            int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
+
+            mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
+            mLoginFormView.animate().setDuration(shortAnimTime).alpha(
+                    show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
+                }
+            });
+
+            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+            mProgressView.animate().setDuration(shortAnimTime).alpha(
+                    show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+                }
+            });
+        }
+
+        else {
+            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+            mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
+        }
+    }
+
 }
 

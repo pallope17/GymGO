@@ -28,7 +28,16 @@
         <activity
             android:name=".registroActivity"
             android:label="@string/title_activity_login2" />
-        <activity android:name=".MainActivity"></activity>
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/title_activity_main"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".RecuperarPassActivity"
+            android:label="@string/title_activity_recuperar_pass" />
+        <activity
+            android:name=".LoginActivityMuestra"
+            android:label="@string/title_activity_login_muestra"></activity>
     </application>
 
 </manifest>
