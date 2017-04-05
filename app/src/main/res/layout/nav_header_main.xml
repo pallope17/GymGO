@@ -14,12 +14,11 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
         android:layout_gravity="center"
-        android:maxHeight="20dp"
-        android:maxWidth="20dp"
-        app:srcCompat="@android:drawable/sym_def_app_icon" />
+        android:layout_margin="10dp"
+        app:srcCompat="@drawable/ic_account_circle_black_24dp"/>
 
     <TextView
         android:id="@+id/nombreUser"

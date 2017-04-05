@@ -16,14 +16,17 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.app.FragmentTransaction;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, AutentificarDialog.OnAutentificar {
 
     //Widgets
 
@@ -32,6 +35,11 @@ public class MainActivity extends AppCompatActivity
         private static final String TAG = "MainActivity";
         private FirebaseUser userLogueado;
         private FirebaseAuth autentificacion;
+
+    //Dialogo Autentificar
+
+        private FragmentTransaction transactionAutentificar;
+        private AutentificarDialog autentificar_dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,6 +104,8 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.datos) {
 
+
+
         }
         else if (id == R.id.cambiarCorreo) {
 
@@ -106,7 +116,15 @@ public class MainActivity extends AppCompatActivity
             cambiarPassword();
         }
         else if (id == R.id.eliminarUser) {
-            eliminarUsuario();
+
+            //Creo e instancio el dialogo para autentificar al usuario
+
+                transactionAutentificar = getFragmentManager().beginTransaction();
+                autentificar_dialog = new AutentificarDialog();
+                autentificar_dialog.setOnAutentificarListener(this);
+                autentificar_dialog.show(transactionAutentificar,null);
+                autentificar_dialog.setCancelable(false);
+
         }
         else if (id == R.id.cerrarSesion) {
             cerrarSesion();
@@ -173,4 +191,26 @@ public class MainActivity extends AppCompatActivity
         finish();
     }
 
+    @Override
+    public void autentificarUsuario(String email, String pass) {
+
+        userLogueado = FirebaseAuth.getInstance().getCurrentUser();
+
+        AuthCredential autentificacion = EmailAuthProvider.getCredential(email,pass);
+
+        userLogueado.reauthenticate(autentificacion).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isSuccessful()){
+                    Log.d(TAG, "Reautentificacion realizada");
+                    eliminarUsuario();
+                }
+                else{
+                    Log.d(TAG, "Fallo en la reautentificacion");
+                    Toast.makeText(MainActivity.this,"Fallo en la reautentificacion",Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+    }
 }
