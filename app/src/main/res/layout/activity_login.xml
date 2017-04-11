@@ -1,7 +1,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:gravity="center_horizontal"
     android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
@@ -11,6 +12,13 @@
     tools:context="com.example.giner.gymgo.LoginActivity">
 
     <!-- Login progress -->
+    <ImageView
+        android:id="@+id/logoIamge"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_margin="20dp"
+        app:srcCompat="@drawable/logogymgo" />
+
     <ProgressBar
         android:id="@+id/login_progress"
         style="?android:attr/progressBarStyleLarge"
@@ -22,7 +30,7 @@
     <ScrollView
         android:id="@+id/login_form"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:id="@+id/email_login_form"
@@ -39,8 +47,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:hint="@string/email"
                     android:ems="10"
+                    android:hint="@string/email"
                     android:inputType="textEmailAddress" />
             </android.support.design.widget.TextInputLayout>
 
@@ -52,7 +60,7 @@
                     android:id="@+id/password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/prompt_password"
+                    android:hint="Contraseña"
                     android:imeActionId="@+id/login"
                     android:imeActionLabel="@string/action_sign_in_short"
                     android:imeOptions="actionUnspecified"
@@ -62,33 +70,37 @@
 
             </android.support.design.widget.TextInputLayout>
 
-            <Button
-                android:id="@+id/email_sign_in_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="@string/iniciar_sesion"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/registrase"
-                android:textSize="25dp"
-                android:textColor="@color/colorAccionesLogin"
-                android:textAlignment="center"
-                android:layout_width="match_parent"
-                android:layout_margin="10dp"
-                android:layout_height="wrap_content"
-                android:text="@string/resgistrarse" />
-            <TextView
-                android:id="@+id/recuperarPass"
-                android:textSize="25dp"
-                android:textColor="@color/colorAccionesLogin"
-                android:textAlignment="center"
-                android:layout_width="match_parent"
-                android:layout_margin="10dp"
-                android:layout_height="wrap_content"
-                android:text="@string/he_olvidado_la_contrase_a" />
-
         </LinearLayout>
     </ScrollView>
+
+    <Button
+        android:id="@+id/email_sign_in_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="20dp"
+        android:text="@string/iniciar_sesion"
+        android:textStyle="bold"
+        android:theme="@style/botonLogin" />
+
+    <TextView
+        android:id="@+id/registrase"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text="@string/resgistrarse"
+        android:textAlignment="center"
+        android:textColor="@color/colorAccionesLogin"
+        android:textSize="25dp" />
+
+    <TextView
+        android:id="@+id/recuperarPass"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text="@string/he_olvidado_la_contrase_a"
+        android:textAlignment="center"
+        android:textColor="@color/colorAccionesLogin"
+        android:textSize="25dp" />
+
 </LinearLayout>

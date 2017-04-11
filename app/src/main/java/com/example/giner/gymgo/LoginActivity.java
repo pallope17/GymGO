@@ -5,6 +5,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.media.Image;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
@@ -32,6 +33,8 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,10 +42,14 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthException;
+import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import es.dmoral.toasty.Toasty;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -62,7 +69,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private TextView olvidoPass;
     private View mProgressView;
     private View mLoginFormView;
-
+    private ImageView logo;
 
 
     @Override
@@ -97,6 +104,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         // Instancio los widgets
 
+            logo = (ImageView) findViewById(R.id.logoIamge);
             email = (EditText)findViewById(R.id.email);
             pass = (EditText)findViewById(R.id.password);
             botonLogin = (Button)findViewById(R.id.email_sign_in_button);
@@ -129,23 +137,47 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         if (v.getId() == botonLogin.getId()) {
 
-            showProgress(true);
-
-            autentificacion.signInWithEmailAndPassword(email.getText().toString(), pass.getText().toString()).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
-                    showProgress(false);
-                    //Al completarse muestra un log para informar de que ha sido logueado correctamente, si falla el login mostrar'a un log y toast al usuario
-                    if (task.isSuccessful()) {
-                        Log.d(TAG, "Login correcto.");
-                        OnLoginCorrecto();
-                    } else {
-                        Log.d(TAG, "Login fallido");
-                        Toast.makeText(LoginActivity.this, "El inicio de sesion ha fallado", Toast.LENGTH_SHORT).show();
+            if(email.getText().toString().isEmpty()||pass.getText().toString().isEmpty()||pass.getText().toString().length()<6||!email.getText().toString().contains("@")||!email.getText().toString().contains(".")){
+                //Condicionales del campo pass
+                    if(pass.getText().toString().isEmpty()) {
+                        pass.setError("El campo de la contraseña esta vacio");
                     }
-                }
-            });
+                    else if(pass.getText().toString().length()<6){
+                        pass.setError("La contraseña debe tener 6 caracteres como mínimo");
+                    }
+                    else{
+                        pass.setError(null);
+                    }
+                //Condicionales del campo email
+                    if(email.getText().toString().isEmpty()){
+                        email.setError("El campo del email esta vacio");
+                    }
+                    else if(!email.getText().toString().contains("@")||!email.getText().toString().contains(".")){
+                        email.setError("El email introducido no es válido");
+                    }
+                    else{
+                        email.setError(null);
+                    }
+            }
+            else {
 
+                showProgress(true);
+                    autentificacion.signInWithEmailAndPassword(email.getText().toString(), pass.getText().toString()).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            showProgress(false);
+                            //Al completarse muestra un log para informar de que ha sido logueado correctamente, si falla el login mostrar'a un log y toast al usuario
+                            if (task.isSuccessful()) {
+                                Log.d(TAG, "Login correcto.");
+                                OnLoginCorrecto();
+                            } else {
+                                Log.d(TAG, "Login fallido");
+                                Toasty.error(LoginActivity.this,task.getException().getMessage().toString(), Toast.LENGTH_SHORT).show();
+                                onRestart();
+                            }
+                        }
+                    });
+            }
         }
 
         else if(v.getId() == registrarse.getId()){
@@ -187,12 +219,24 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
                 }
             });
-        }
+            botonLogin.setVisibility(show ? View.GONE : View.VISIBLE);
+            registrarse.setVisibility(show ? View.GONE : View.VISIBLE);
+            olvidoPass.setVisibility(show ? View.GONE : View.VISIBLE);
 
-        else {
+        } else {
             mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
             mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
+            botonLogin.setVisibility(show ? View.GONE : View.VISIBLE);
+            registrarse.setVisibility(show ? View.GONE : View.VISIBLE);
+            olvidoPass.setVisibility(show ? View.GONE : View.VISIBLE);
         }
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        email.setText("");
+        pass.setText("");
     }
 
 }

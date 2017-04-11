@@ -21,6 +21,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import es.dmoral.toasty.Toasty;
+
 public class registroActivity extends AppCompatActivity implements View.OnClickListener {
 
     //Variables
@@ -30,7 +32,9 @@ public class registroActivity extends AppCompatActivity implements View.OnClickL
         private FirebaseAuth.AuthStateListener autentificadorListener;
         private EditText emailRegistro;
         private EditText passRegistro;
+        private EditText repetirPass;
         private Button botonRegistro;
+        private Button botonVolver;
         private View mProgressView;
         private View mLoginFormView;
 
@@ -68,8 +72,11 @@ public class registroActivity extends AppCompatActivity implements View.OnClickL
 
             emailRegistro = (EditText)findViewById(R.id.emailRegistro);
             passRegistro = (EditText)findViewById(R.id.passwordRegistro);
+            repetirPass = (EditText)findViewById(R.id.confirmarRegistro);
             botonRegistro = (Button)findViewById(R.id.buttonRegistrar);
+            botonVolver = (Button)findViewById(R.id.buttonVolver);
             botonRegistro.setOnClickListener(this);
+            botonVolver.setOnClickListener(this);
             mLoginFormView = findViewById(R.id.login_form);
             mProgressView = findViewById(R.id.login_progress);
 
@@ -93,26 +100,62 @@ public class registroActivity extends AppCompatActivity implements View.OnClickL
     public void onClick(View v) {
 
         if(v.getId()==botonRegistro.getId()){
+            if(emailRegistro.getText().toString().isEmpty()||passRegistro.getText().toString().isEmpty()||passRegistro.getText().toString().length()<6||
+                    !emailRegistro.getText().toString().contains("@")||repetirPass.getText().toString().isEmpty()||repetirPass.getText().toString().length()<6||
+                    !passRegistro.getText().toString().equals(repetirPass.getText().toString())||!emailRegistro.getText().toString().contains(".")){
 
-            showProgress(true);
-
-            autentificacion.createUserWithEmailAndPassword(emailRegistro.getText().toString(),passRegistro.getText().toString()).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
-                    showProgress(false);
-                    if(task.isSuccessful()){
-                        Log.d(TAG, "Usuario registrado");
-                        finish();
-                    }
-                    else{
-                        Log.d(TAG, "Fallo en el registro");
-                        Toast.makeText(registroActivity.this,"Error en el registro",Toast.LENGTH_SHORT).show();
-                    }
+                //Condicionales del campo pass
+                if(passRegistro.getText().toString().isEmpty()) {
+                    passRegistro.setError("El campo de la contraseña esta vacio");
                 }
-            });
+                else if(passRegistro.getText().toString().length()<6){
+                    passRegistro.setError("La contraseña debe tener 6 caracteres como mínimo");
+                }
+                else{
+                    passRegistro.setError(null);
+                }
+                //Condicionales del campo email
+                if(emailRegistro.getText().toString().isEmpty()){
+                    emailRegistro.setError("El campo del email esta vacio");
+                }
+                else if(!emailRegistro.getText().toString().contains("@")||!emailRegistro.getText().toString().contains(".")){
+                    emailRegistro.setError("El email introducido no es válido");
+                }
+                else{
+                    emailRegistro.setError(null);
+                }
+                //Condicionales del campo repetir pass
+                if(!passRegistro.getText().toString().equals(repetirPass.getText().toString())){
+                    repetirPass.setError("Las contraseñas no coinciden");
+                    passRegistro.setError("Las contraseñas no coinciden");
+                }
+                else if(repetirPass.getText().toString().isEmpty()){
+                    repetirPass.setError("El campo de repetir la contraseña esta vacio");
+                }
 
+            }
+            else{
+                showProgress(true);
+                autentificacion.createUserWithEmailAndPassword(emailRegistro.getText().toString(),passRegistro.getText().toString()).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        showProgress(false);
+                        if(task.isSuccessful()){
+                            Log.d(TAG, "Usuario registrado");
+                            Toasty.success(registroActivity.this, "Usuario registrado", Toast.LENGTH_SHORT).show();
+                            finish();
+                        }
+                        else{
+                            Log.d(TAG, "Fallo en el registro");
+                            Toasty.error(registroActivity.this,task.getException().getMessage().toString(),Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+            }
         }
-
+        else if (v.getId()==botonVolver.getId()){
+            finish();
+        }
     }
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
@@ -138,12 +181,19 @@ public class registroActivity extends AppCompatActivity implements View.OnClickL
                     mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
                 }
             });
+            botonRegistro.setVisibility(show ? View.GONE : View.VISIBLE);
+            botonVolver.setVisibility(show ? View.GONE : View.VISIBLE);
         }
 
         else {
             mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
             mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
+            botonRegistro.setVisibility(show ? View.GONE : View.VISIBLE);
+            botonVolver.setVisibility(show ? View.GONE : View.VISIBLE);
         }
+    }
+
+    public void onBackPressed(){
     }
 
 }

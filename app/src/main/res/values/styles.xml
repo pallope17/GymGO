@@ -17,4 +17,9 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name="botonLogin" parent="Widget.AppCompat.Button.Colored">
+        <item name="colorButtonNormal">@color/botonLogin</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
 </resources>

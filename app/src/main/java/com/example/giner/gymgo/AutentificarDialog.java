@@ -22,11 +22,21 @@ public class AutentificarDialog extends DialogFragment implements View.OnClickLi
         private AlertDialog dialogo;
         private OnAutentificar escuchador;
 
+    //Variables
+
+        private int claveAccion;
+
+    //Constructor
+
+        public AutentificarDialog(int claveAccion){
+            this.claveAccion=claveAccion;
+        }
+
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle("Autentificación");
+        builder.setTitle("Reautentificación");
         View dialogAutentificacion = getActivity().getLayoutInflater().inflate(R.layout.dialog_autentificacion,null);
 
         //Instancio los objetos
@@ -75,10 +85,32 @@ public class AutentificarDialog extends DialogFragment implements View.OnClickLi
 
         if(v.getId()==botonAutentificar.getId()){
 
-            //Proteger la aplicacion de errores
-
-                escuchador.autentificarUsuario(email.getText().toString(),pass.getText().toString());
+            if(email.getText().toString().isEmpty()||pass.getText().toString().isEmpty()||pass.getText().toString().length()<6||!email.getText().toString().contains("@")||!email.getText().toString().contains(".")){
+                //Condicionales del campo pass
+                if(pass.getText().toString().isEmpty()) {
+                    pass.setError("El campo de la contraseña esta vacio");
+                }
+                else if(pass.getText().toString().length()<6){
+                    pass.setError("La contraseña debe tener 6 caracteres como mínimo");
+                }
+                else{
+                    pass.setError(null);
+                }
+                //Condicionales del campo email
+                if(email.getText().toString().isEmpty()){
+                    email.setError("El campo del email esta vacio");
+                }
+                else if(!email.getText().toString().contains("@")||!email.getText().toString().contains(".")){
+                    email.setError("El email introducido no es válido");
+                }
+                else{
+                    email.setError(null);
+                }
+            }
+            else {
+                escuchador.autentificarUsuario(email.getText().toString(), pass.getText().toString(), claveAccion);
                 dismiss();
+            }
 
         }
 
@@ -92,7 +124,7 @@ public class AutentificarDialog extends DialogFragment implements View.OnClickLi
 
         //Metodo para pasar el email y la contraseña a la actividad
 
-            void autentificarUsuario(String email, String pass);
+            void autentificarUsuario(String email, String pass, int claveAccion);
 
     }
 
