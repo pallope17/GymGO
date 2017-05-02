@@ -8,7 +8,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -17,7 +16,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class registroActivity extends AppCompatActivity implements View.OnClickListener {
+public class RegistroActivity extends AppCompatActivity implements View.OnClickListener {
 
     //Variables
 
@@ -95,7 +94,7 @@ public class registroActivity extends AppCompatActivity implements View.OnClickL
                     }
                     else{
                         Log.d(TAG, "Fallo en el registro");
-                        Toast.makeText(registroActivity.this,"Error en el registro",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(RegistroActivity.this,"Error en el registro",Toast.LENGTH_SHORT).show();
                     }
                 }
             });

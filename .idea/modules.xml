@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/GymGO.iml" filepath="$PROJECT_DIR$/GymGO.iml" />
+      <module fileurl="file://$PROJECT_DIR$/GymGO-GitHub.iml" filepath="$PROJECT_DIR$/GymGO-GitHub.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

@@ -19,4 +19,10 @@
     <string name="resgistrarse">Resgistrarse</string>
     <string name="he_olvidado_la_contrase_a">He olvidado la contraseña</string>
     <string name="registrarBoton">Registrar</string>
+    <string name="title_activity_main">MainActivity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
 </resources>
